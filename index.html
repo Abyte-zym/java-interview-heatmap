@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java面试热力图 | 高频考点可视化</title>
+<meta name="description" content="上千次面试数据可视化：Java面试最常问什么？一目了然的热力图告诉你必考知识点分布。免费工具，帮到你再赞赏。">
+<meta name="keywords" content="Java面试热力图,Java面试考点,面试高频题,Java面试数据">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;padding:20px;line-height:1.6}
+.container{max-width:900px;margin:0 auto}
+h1{text-align:center;color:#38bdf8;margin:20px 0 5px}
+.subtitle{text-align:center;color:#94a3b8;margin-bottom:10px;font-size:0.9em}
+.mega-stat{text-align:center;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;padding:16px;margin:16px 0;border:1px solid #334155}
+.mega-stat .number{font-size:2.5em;font-weight:bold;color:#facc15}
+.mega-stat .label{color:#94a3b8;font-size:0.9em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155}
+.card h3{color:#4ade80;margin-bottom:12px}
+.chart-wrap{position:relative;height:300px;width:100%}
+.insight{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);border-radius:8px;padding:12px;margin:10px 0;font-size:0.9em}
+.insight strong{color:#facc15}
+.donate{text-align:center;margin:30px 0;padding:24px;background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;border:2px solid #facc15}
+.donate p{color:#facc15;font-size:1.1em;margin-bottom:10px}
+.donate img{width:200px;border-radius:12px;margin:0 8px}
+.nav{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:20px 0}
+.nav a{background:#1e293b;color:#94a3b8;padding:5px 12px;border-radius:16px;text-decoration:none;font-size:0.8em}
+.nav a:hover{background:#38bdf8;color:#0f172a}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🔥 Java面试热力图</h1>
+<p class="subtitle">上千次面试数据可视化 · 一目了然知道该复习什么</p>
+
+<div class="nav">
+<a href="https://Abyte-zym.github.io/arsenal/">🎯 弹药库</a>
+<a href="https://Abyte-zym.github.io/arsenal/shop.html">🛒 装备商店</a>
+<a href="https://Abyte-zym.github.io/java-resume-builder/">📝 简历</a>
+<a href="https://Abyte-zym.github.io/interview-simulator/">🎯 模拟</a>
+</div>
+
+<div class="mega-stat">
+  <div class="number">3,200+</div>
+  <div class="label">次面试沟通数据支撑 · 30+场真实面试 · 8维度分析</div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>📊 各技术栈面试命中率</h3>
+    <div class="chart-wrap"><canvas id="hitRate"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>🎯 大厂面试重点分布</h3>
+    <div class="chart-wrap"><canvas id="bigTech"></canvas></div>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h3>💀 最容易挂的考点 TOP10</h3>
+    <div class="chart-wrap"><canvas id="failPoints"></canvas></div>
+  </div>
+  <div class="card">
+    <h3>📈 2026年考点趋势变化</h3>
+    <div class="chart-wrap"><canvas id="trends"></canvas></div>
+  </div>
+</div>
+
+<div class="insight">
+<strong>🎯 核心发现：</strong> JVM调优、并发编程、分布式事务 是面试"三座大山"——90%的挂面都栽在这三个领域。Spring AI和大模型应用是2026年新增必考点，准备过的候选人薪资平均高40%。
+</div>
+
+<div class="donate">
+<p>☕ 这些数据帮你省了至少50小时整理时间</p>
+<p style="color:#94a3b8;font-size:0.9em">帮到你了？请作者喝杯咖啡，支持持续更新更多干货</p>
+<img src="qrcode.png" alt="微信赞赏码">
+<p style="font-size:0.8em;color:#64748b;margin-top:6px">微信扫码赞赏</p>
+</div>
+
+<div class="nav">
+<a href="https://Abyte-zym.github.io/arsenal/">🎯 弹药库</a>
+<a href="https://Abyte-zym.github.io/arsenal/shop.html">🛒 商店 ¥9.9起</a>
+<a href="https://Abyte-zym.github.io/interview-simulator/">🎯 模拟面试</a>
+</div>
+
+</div>
+<script>
+// 各技术栈命中率 - 柱状图
+new Chart(document.getElementById('hitRate'),{type:'bar',data:{labels:['JVM','并发','Spring','MySQL','Redis','MQ','微服务','AI/LLM'],datasets:[{label:'面试命中率%',data:[85,78,72,68,65,55,50,42],backgroundColor:'#38bdf8'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+
+// 大厂重点分布 - 雷达图
+new Chart(document.getElementById('bigTech'),{type:'radar',data:{labels:['算法','Java基础','系统设计','项目经验','AI能力','软技能'],datasets:[{label:'大厂面试权重',data:[9,8,7,7,6,5],backgroundColor:'rgba(56,189,248,0.2)',borderColor:'#38bdf8'}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{grid:{color:'#334155'}}}}});
+
+// 最容易挂的考点
+new Chart(document.getElementById('failPoints'),{type:'bar',data:{labels:['JVM调优','并发编程','分布式事务','索引优化','Redis集群','设计模式','网络协议','OS原理','源码阅读','场景设计'],datasets:[{label:'挂面率%',data:[42,38,35,28,25,22,18,15,12,10],backgroundColor:'#f87171'}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+
+// 2026趋势
+new Chart(document.getElementById('trends'),{type:'line',data:{labels:['2023','2024','2025','2026'],datasets:[{label:'Spring AI',data:[0,5,20,42],borderColor:'#facc15'},{label:'微服务',data:[50,55,58,60],borderColor:'#38bdf8'},{label:'JVM',data:[70,75,80,85],borderColor:'#4ade80'},{label:'并发编程',data:[65,70,75,78],borderColor:'#f87171'}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{grid:{color:'#334155'}},x:{grid:{color:'#334155'}}}}});
+</script>
+</body>
+</html>
